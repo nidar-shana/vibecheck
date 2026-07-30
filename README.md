@@ -1,2 +1,2 @@
 # vibecheck
-Hourly Push Notifications
+Hourly Push Notifications.
