@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'vibecheck-users';
 const SESSION_KEY = 'vibecheck-current-user';
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
+const GOOGLE_CLIENT_ID = 141503760783-so53jb1ca36v8856dibc8l1p1rai3v5a.apps.googleusercontent.com'';
 
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
