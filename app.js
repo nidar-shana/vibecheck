@@ -82,8 +82,8 @@ function initializeGoogleAuth() {
     return;
   }
 
-  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('YOUR_GOOGLE_CLIENT_ID')) {
-    showStatus('Google login is ready for setup. Replace the demo client ID in app.js to enable real Google OAuth.', 'info');
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('141503760783-so53jb1ca36v8856dibc8l1p1rai3v5a.apps.googleusercontent.com')) {
+    showStatus('Google login is ready for setup.', 'info');
     return;
   }
 
