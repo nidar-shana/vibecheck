@@ -1,0 +1,28 @@
+{
+  "name": "vibecheck",
+  "version": "1.0.0",
+  "description": "Hourly Push Notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nidar-shana/vibecheck.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nidar-shana/vibecheck/issues"
+  },
+  "homepage": "https://github.com/nidar-shana/vibecheck#readme",
+  "dependencies": {
+    "body-parser": "^2.3.0",
+    "cron": "^4.4.0",
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1",
+    "web-push": "^3.6.7"
+  }
+}
