@@ -5,7 +5,10 @@ The Idea is to make a person, especially an introvert, feel like they belong som
 Hoping this idea executes well! :)
 
 ## Setup / Installation Guide:
+
+```bash
 git clone https://github.com/nidar-shana/vibecheck.git
 cd vibecheck
 npm install
 npm start
+```
