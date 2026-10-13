@@ -1,21 +1,126 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Hourly Vibe Check</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>body{font-family:system-ui,Arial;max-width:720px;margin:2rem auto;padding:1rem}button{padding:.6rem 1rem;margin:.5rem}</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f6fb" />
+    <meta
+      name="description"
+      content="A gentle space to check in with yourself and notice how you feel."
+    />
+    <title>VibeCheck — Your daily check-in</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="vibe.js" defer></script>
   </head>
   <body>
-    <h1>Hourly Vibe Check</h1>
-    <p>Get an hourly push asking "How are you feeling right now?"</p>
-    <div id="controls">
-      <button id="subscribe">Subscribe to hourly vibes</button>
-      <button id="unsubscribe">Unsubscribe</button>
-      <button id="sendNow">Send vibe now (test)</button>
-    </div>
-    <div id="status"></div>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#today" aria-label="VibeCheck home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 27s-10-6.2-10-14a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 26 13c0 7.8-10 14-10 14Z" fill="currentColor" />
+              <path d="m16 12 1.1 2.8L20 16l-2.9 1.1L16 20l-1.1-2.9L12 16l2.9-1.2L16 12Z" fill="#fff" />
+            </svg>
+          </span>
+          <span>vibecheck</span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#today">Today</a>
+          <a class="nav-link" href="#your-week">Your week</a>
+        </nav>
+        <div class="header-note"><span class="status-dot"></span> Just for you</div>
+      </header>
 
-    <script src="app.js"></script>
+      <main id="today">
+        <section class="welcome-row" aria-labelledby="welcome-title">
+          <div>
+            <p class="eyebrow" id="today-date"></p>
+            <h1 id="welcome-title">Make space for <span>how you feel.</span></h1>
+            <p class="welcome-copy">A small moment to check in with yourself. There’s no right or wrong answer.</p>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <span class="art-spark spark-one">✳</span>
+            <span class="art-spark spark-two">✦</span>
+            <span class="art-sun"></span>
+            <span class="art-orbit orbit-one"></span>
+            <span class="art-orbit orbit-two"></span>
+          </div>
+        </section>
+
+        <section class="checkin-card" aria-labelledby="checkin-title">
+          <div class="checkin-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY CHECK-IN</p>
+              <h2 id="checkin-title">How are you feeling right now?</h2>
+            </div>
+            <span class="private-note">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 8V6a4.5 4.5 0 0 1 9 0v2M4.5 8h11v9h-11z" /></svg>
+              Just between you and you
+            </span>
+          </div>
+
+          <div class="mood-options" role="group" aria-label="Choose how you feel">
+            <button class="mood-option mood-good" type="button" data-mood="good" aria-label="I feel good">
+              <span class="mood-emoji" aria-hidden="true">☺</span>
+              <span class="mood-label">Good</span>
+              <span class="mood-detail">Things feel bright</span>
+            </button>
+            <button class="mood-option mood-okay" type="button" data-mood="okay" aria-label="I feel okay">
+              <span class="mood-emoji" aria-hidden="true">◡</span>
+              <span class="mood-label">Okay</span>
+              <span class="mood-detail">Taking it as it comes</span>
+            </button>
+            <button class="mood-option mood-low" type="button" data-mood="bad" aria-label="I don't feel great">
+              <span class="mood-emoji" aria-hidden="true">☹</span>
+              <span class="mood-label">Not great</span>
+              <span class="mood-detail">A little support helps</span>
+            </button>
+          </div>
+          <p class="checkin-feedback" id="checkin-feedback" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="dashboard-grid" id="your-week" aria-label="Your check-in activity">
+          <article class="panel week-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">A LITTLE PERSPECTIVE</p>
+                <h2>Your week</h2>
+              </div>
+              <span class="week-total" id="week-total">0 check-ins</span>
+            </div>
+            <div class="week-grid" id="week-grid" aria-label="Check-ins this week"></div>
+            <p class="panel-footnote">Every check-in counts, even the quiet ones.</p>
+          </article>
+
+          <article class="panel history-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">LOOKING BACK</p>
+                <h2>Recent check-ins</h2>
+              </div>
+              <span class="history-icon" aria-hidden="true">↗</span>
+            </div>
+            <div class="history-list" id="history-list"></div>
+          </article>
+        </section>
+
+        <aside class="gentle-note">
+          <span class="note-icon" aria-hidden="true">✦</span>
+          <p><strong>A gentle reminder</strong><span>Whatever you’re feeling, you don’t have to figure it all out at once.</span></p>
+          <span class="note-flower" aria-hidden="true">✳</span>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <span>Made for the moments that matter.</span>
+        <span>Take a breath. You’re here.</span>
+      </footer>
+    </div>
   </body>
 </html>
