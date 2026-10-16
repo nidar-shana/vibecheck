@@ -1,169 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f6fb" />
+    <meta
+      name="description"
+      content="A gentle space to check in with yourself and notice how you feel."
+    />
+    <title>VibeCheck — Your daily check-in</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="vibe.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#today" aria-label="VibeCheck home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 27s-10-6.2-10-14a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 26 13c0 7.8-10 14-10 14Z" fill="currentColor" />
+              <path d="m16 12 1.1 2.8L20 16l-2.9 1.1L16 20l-1.1-2.9L12 16l2.9-1.2L16 12Z" fill="#fff" />
+            </svg>
+          </span>
+          <span>vibecheck</span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#today">Today</a>
+          <a class="nav-link" href="#your-week">Your week</a>
+        </nav>
+        <div class="header-note"><span class="status-dot"></span> Just for you</div>
+      </header>
 
-#include <bits/stdc++.h>
-using namespace std;
+      <main id="today">
+        <section class="welcome-row" aria-labelledby="welcome-title">
+          <div>
+            <p class="eyebrow" id="today-date"></p>
+            <h1 id="welcome-title">Make space for <span>how you feel.</span></h1>
+            <p class="welcome-copy">A small moment to check in with yourself. There’s no right or wrong answer.</p>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <span class="art-spark spark-one">✳</span>
+            <span class="art-spark spark-two">✦</span>
+            <span class="art-sun"></span>
+            <span class="art-orbit orbit-one"></span>
+            <span class="art-orbit orbit-two"></span>
+          </div>
+        </section>
 
-const int MOD = 998244353;
-const int N = 5005;
+        <section class="checkin-card" aria-labelledby="checkin-title">
+          <div class="checkin-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY CHECK-IN</p>
+              <h2 id="checkin-title">How are you feeling right now?</h2>
+            </div>
+            <span class="private-note">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 8V6a4.5 4.5 0 0 1 9 0v2M4.5 8h11v9h-11z" /></svg>
+              Just between you and you
+            </span>
+          </div>
 
-int add(int x, int y) {
-    x += y;
-    if (x >= MOD) x -= MOD;
-    if (x < 0) x += MOD;
-    return x;
-}
+          <div class="mood-options" role="group" aria-label="Choose how you feel">
+            <button class="mood-option mood-good" type="button" data-mood="good" aria-label="I feel good">
+              <span class="mood-emoji" aria-hidden="true">☺</span>
+              <span class="mood-label">Good</span>
+              <span class="mood-detail">Things feel bright</span>
+            </button>
+            <button class="mood-option mood-okay" type="button" data-mood="okay" aria-label="I feel okay">
+              <span class="mood-emoji" aria-hidden="true">◡</span>
+              <span class="mood-label">Okay</span>
+              <span class="mood-detail">Taking it as it comes</span>
+            </button>
+            <button class="mood-option mood-low" type="button" data-mood="bad" aria-label="I don't feel great">
+              <span class="mood-emoji" aria-hidden="true">☹</span>
+              <span class="mood-label">Not great</span>
+              <span class="mood-detail">A little support helps</span>
+            </button>
+          </div>
+          <p class="checkin-feedback" id="checkin-feedback" role="status" aria-live="polite"></p>
+        </section>
 
-int mul(int x, int y) {
-    return 1LL * x * y % MOD;
-}
+        <section class="dashboard-grid" id="your-week" aria-label="Your check-in activity">
+          <article class="panel week-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">A LITTLE PERSPECTIVE</p>
+                <h2>Your week</h2>
+              </div>
+              <span class="week-total" id="week-total">0 check-ins</span>
+            </div>
+            <div class="week-grid" id="week-grid" aria-label="Check-ins this week"></div>
+            <p class="panel-footnote">Every check-in counts, even the quiet ones.</p>
+          </article>
 
-int sub(int x, int y) {
-    return add(x, -y);
-}
+          <article class="panel history-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">LOOKING BACK</p>
+                <h2>Recent check-ins</h2>
+              </div>
+              <span class="history-icon" aria-hidden="true">↗</span>
+            </div>
+            <div class="history-list" id="history-list"></div>
+          </article>
+        </section>
 
-int binpow(int x, int y) {
-    int z = 1;
-    while (y) {
-        if (y & 1) z = mul(z, x);
-        x = mul(x, x);
-        y >>= 1;
-    }
-    return z;
-}
+        <aside class="gentle-note">
+          <span class="note-icon" aria-hidden="true">✦</span>
+          <p><strong>A gentle reminder</strong><span>Whatever you’re feeling, you don’t have to figure it all out at once.</span></p>
+          <span class="note-flower" aria-hidden="true">✳</span>
+        </aside>
 
-int fact[N], inv[N];
+        <section class="pinterest-inspiration" aria-labelledby="inspiration-title">
+          <div>
+            <p class="eyebrow">A LITTLE INSPIRATION</p>
+            <h2 id="inspiration-title">Find something that feels right</h2>
+            <p class="inspiration-copy">Explore ideas and reminders on Pinterest.</p>
+          </div>
+          <div class="inspiration-links" aria-label="Pinterest inspiration searches">
+            <a class="pinterest-link" href="https://www.pinterest.com/search/pins/?q=good%20vibes" target="_blank" rel="noopener noreferrer">Good vibes</a>
+            <a class="pinterest-link" href="https://www.pinterest.com/search/pins/?q=calming%20self%20care" target="_blank" rel="noopener noreferrer">Find calm</a>
+            <a class="pinterest-link" href="https://www.pinterest.com/search/pins/?q=comforting%20quotes" target="_blank" rel="noopener noreferrer">Gentle reminders</a>
+          </div>
+        </section>
+      </main>
 
-void precalc() {
-    fact[0] = 1;
-    for (int i = 1; i < N; i++)
-        fact[i] = mul(i, fact[i - 1]);
-
-    for (int i = 1; i < N; i++)
-        inv[i] = binpow(i, MOD - 2);
-}
-
-struct Blocks {
-    int n;
-    vector<int> cutoff_pos, pref, pref_G;
-    vector<pair<int, int>> a;
-
-    Blocks(int n = 0) : n(n) {}
-
-    void rebuild() {
-        pref = {0};
-        pref_G = {0};
-
-        vector<bool> used(n, false);
-        vector<pair<int, int>> b;
-        cutoff_pos.assign(n, -1);
-
-        int sign = 1;
-        int cnt = n - 1;
-
-        for (int i = 0; i < (int)a.size(); i++) {
-            int x = a[i].first;
-            int len = a[i].second;
-
-            if (used[x]) break;
-
-            used[x] = true;
-            b.push_back({x, len});
-            cutoff_pos[x] = i;
-
-            int c = mul(sign, mul(len, fact[cnt]));
-            int cG = mul(sign, mul(len, fact[cnt - 1]));
-
-            --cnt;
-            sign = sub(0, sign);
-
-            pref.push_back(add(pref.back(), c));
-            pref_G.push_back(add(pref_G.back(), cG));
-        }
-
-        a = b;
-    }
-
-    int getF() {
-        return pref.back();
-    }
-
-    int getG(int x) {
-        if (cutoff_pos[x] == -1)
-            return pref_G.back();
-        return pref_G[cutoff_pos[x]];
-    }
-
-    void append(int x) {
-        if (a.empty() || a[0].first != x)
-            a.insert(a.begin(), {x, 0});
-
-        a[0].second++;
-        rebuild();
-    }
-};
-
-void solve() {
-    int n;
-    cin >> n;
-
-    vector<int> a(n - 1);
-    for (int i = 0; i < n - 1; i++) {
-        cin >> a[i];
-        --a[i];
-    }
-
-    Blocks b(n);
-
-    vector<vector<int>> ans(n - 1, vector<int>(n, 0));
-    vector<vector<int>> G(n - 1, vector<int>(n, 0));
-    vector<int> F(n - 1);
-
-    for (int i = 0; i < n - 1; i++) {
-        int x = a[i];
-        b.append(x);
-
-        F[i] = b.getF();
-
-        for (int j = 0; j < n; j++)
-            G[i][j] = b.getG(j);
-
-        for (int j = 0; j < n; j++) {
-            if (a[i] == j) continue;
-
-            int s = add(fact[n - 1], G[i][j]);
-
-            if (i > 0) {
-                s = sub(s, G[i - 1][j]);
-
-                if (a[i - 1] == j)
-                    s = add(s, F[i - 1]);
-            }
-
-            ans[i][j] = s;
-        }
-    }
-
-    long long res = 0;
-
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n; j++) {
-            res ^= 1LL * ans[i][j] * (i + 1) * (j + 1);
-        }
-    }
-
-    cout << res << '\n';
-}
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    precalc();
-
-    int t;
-    cin >> t;
-
-    while (t--)
-        solve();
-
-    return 0;
-}
+      <footer class="site-footer">
+        <span>Made for the moments that matter.</span>
+        <span>Take a breath. You’re here.</span>
+      </footer>
+    </div>
+  </body>
+</html>
